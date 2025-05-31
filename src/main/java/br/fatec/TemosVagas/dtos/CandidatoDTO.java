@@ -6,7 +6,6 @@ import java.io.Serial;
 import java.io.Serializable;
 
 public record CandidatoDTO(
-        Long id,
         String nome,
         String cpf,
         String telefone,
@@ -23,7 +22,6 @@ public record CandidatoDTO(
     public static CandidatoDTO valueOf(Candidato candidato) {
         if (candidato != null) {
             return new CandidatoDTO(
-                    candidato.getId(),
                     candidato.getNome(),
                     candidato.getCpf(),
                     candidato.getTelefone(),
@@ -39,7 +37,6 @@ public record CandidatoDTO(
     public static Candidato toCandidato(CandidatoDTO dto) {
         if (dto != null) {
             Candidato candidato = new Candidato();
-            candidato.setId(dto.id);
             candidato.setNome(dto.nome);
             candidato.setCpf(dto.cpf);
             candidato.setTelefone(dto.telefone);

@@ -21,4 +21,10 @@ public class CandidatoController {
         return ResponseEntity.ok().body(CandidatoDTO.valueOf(candidato));
     }
 
+    @GetMapping("/procurar/{id}")
+    public @ResponseBody ResponseEntity<CandidatoDTO> procurar(@PathVariable Long id) {
+        Candidato candidato = candidatoService.findById(id);
+        return ResponseEntity.ok().body(CandidatoDTO.valueOf(candidato));
+    }
+
 }
