@@ -39,4 +39,8 @@ public class Formacao implements Serializable {
     @Column(name = "dataFim", nullable = false)
     private Date dataFim;
 
+    @ManyToOne
+    @JoinColumn(name = "id_curriculo")
+    private Curriculo curriculo;
+
 }
