@@ -24,17 +24,7 @@ public class Curriculo implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "curriculo_seq")
     private Long id;
 
-    /* Instância das formações do candidato.
-    *  CascadeType.ALL indica que operações CRUD serão automaticamente tratadas
-    *  OrphanRemoval compara e remove objetos que não batem com o banco de dados
-    */
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(
-            name = "id_curriculo",
-            referencedColumnName = "id",
-            insertable = true,
-            updatable = true
-    )
+    @OneToMany(mappedBy = "curriculo")
     private List<Formacao> listaFormacao;
 
     @OneToOne
