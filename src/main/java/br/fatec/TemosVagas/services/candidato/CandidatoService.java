@@ -1,4 +1,4 @@
-package br.fatec.TemosVagas.services;
+package br.fatec.TemosVagas.services.candidato;
 
 import br.fatec.TemosVagas.entities.candidato.Candidato;
 import br.fatec.TemosVagas.repositories.candidato.CandidatoRepository;
@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CandidatoService {
+public class  CandidatoService {
 
     @Autowired
     CandidatoRepository candidatoRepository;

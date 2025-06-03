@@ -1,8 +1,8 @@
-package br.fatec.TemosVagas.controllers;
+package br.fatec.TemosVagas.controllers.candidato;
 
 import br.fatec.TemosVagas.dtos.CandidatoDTO;
 import br.fatec.TemosVagas.entities.candidato.Candidato;
-import br.fatec.TemosVagas.services.CandidatoService;
+import br.fatec.TemosVagas.services.candidato.CandidatoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
