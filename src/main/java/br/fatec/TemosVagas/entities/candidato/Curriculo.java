@@ -1,10 +1,12 @@
 package br.fatec.TemosVagas.entities.candidato;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -24,8 +26,9 @@ public class Curriculo implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "curriculo_seq")
     private Long id;
 
-    @OneToMany(mappedBy = "curriculo")
-    private List<Formacao> listaFormacao;
+    @OneToMany(mappedBy = "curriculo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Formacao> listaFormacao = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(

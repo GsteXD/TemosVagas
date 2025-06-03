@@ -4,9 +4,10 @@ import br.fatec.TemosVagas.entities.candidato.Formacao;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,8 +15,8 @@ public record FormacaoDTO(
         String curso,
         String instituicao,
         String tipoDiploma,
-        Date dataInicio,
-        Date dataFim
+        String dataInicio,
+        String dataFim
         
 ) implements Serializable {
 
@@ -55,13 +56,14 @@ public record FormacaoDTO(
     }
 
     public static Formacao toFormacao(FormacaoDTO dto) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
         if ( dto != null ) {
             Formacao formacao = new Formacao();
             formacao.setCurso(dto.curso);
             formacao.setInstituicao(dto.instituicao);
             formacao.setTipoDiploma(dto.tipoDiploma);
-            formacao.setDataInicio(dto.dataInicio);
-            formacao.setDataFim(dto.dataFim);
+            formacao.setDataInicio(YearMonth.parse(dto.dataInicio, formatter));
+            formacao.setDataFim(YearMonth.parse(dto.dataFim, formatter));
             return formacao;
         }
         return null;

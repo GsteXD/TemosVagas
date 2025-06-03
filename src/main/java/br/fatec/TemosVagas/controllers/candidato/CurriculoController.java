@@ -1,6 +1,7 @@
 package br.fatec.TemosVagas.controllers.candidato;
 
 import br.fatec.TemosVagas.dtos.CurriculoDTO;
+import br.fatec.TemosVagas.dtos.FormacaoDTO;
 import br.fatec.TemosVagas.entities.candidato.Curriculo;
 import br.fatec.TemosVagas.entities.candidato.Formacao;
 import br.fatec.TemosVagas.services.candidato.CurriculoService;
@@ -24,9 +25,9 @@ public class CurriculoController {
     }
 
     @GetMapping("/listar/formacoes/{id_curriculo}")
-    public @ResponseBody ResponseEntity<List<Formacao>> listarFormacoes(@PathVariable Long id_curriculo) {
+    public @ResponseBody ResponseEntity<List<FormacaoDTO>> listarFormacoes(@PathVariable Long id_curriculo) {
         List<Formacao> formacoes = curriculoService.listarFormacoes(id_curriculo);
-        return ResponseEntity.ok().body(formacoes);
+        return ResponseEntity.ok().body(FormacaoDTO.valueAll(formacoes));
     }
 
 }
