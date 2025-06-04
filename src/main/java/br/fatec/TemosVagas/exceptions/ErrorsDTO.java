@@ -1,7 +1,7 @@
 package br.fatec.TemosVagas.exceptions;
 
 public record ErrorsDTO(
-        String erro,
+        Object erro,
         int codStatus
 ) {
 }
