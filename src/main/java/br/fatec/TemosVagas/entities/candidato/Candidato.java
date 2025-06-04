@@ -8,13 +8,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serial;
-import java.io.Serializable;
 
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "candidato", schema = "public")
-public class Candidato extends Usuario implements Serializable {
+public class Candidato extends Usuario {
 
     @Serial
     private static final long serialVersionUID = 1L;
