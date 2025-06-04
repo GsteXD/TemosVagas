@@ -5,10 +5,25 @@ import br.fatec.TemosVagas.entities.usuario.Endereco;
 import java.io.Serial;
 import java.io.Serializable;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 public record EnderecoDTO(
+
+        @NotBlank(message = "É necessário informar um país")
         String pais,
+
+        @NotBlank(message = "É necessário informar uma cidade.")
         String cidade,
+
+        @NotBlank(message = "É necessário informar um estado.")
         String estado,
+
+        @NotBlank(message = "É necessário informar um cep.")
+        @Pattern(
+            regexp = "^(\\d{5}-\\d{3}|\\d{8})$",
+            message = "O CEP inserido não corresponde ao formato desejado."
+        )
         String cep
 ) implements Serializable {
 
