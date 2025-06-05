@@ -5,6 +5,9 @@ import br.fatec.TemosVagas.entities.candidato.Formacao;
 import br.fatec.TemosVagas.repositories.candidato.CurriculoRepository;
 import br.fatec.TemosVagas.repositories.candidato.FormacaoRepository;
 import jakarta.persistence.EntityNotFoundException;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,8 +48,20 @@ public class FormacaoService {
             );
 
             formacaoRepository.delete(formacao);
+        } else {
+            throw new EntityNotFoundException("IDs não fornecidos.");
         }
-        throw new EntityNotFoundException("IDs não fornecidos.");
+        
+    }
+
+    @Transactional(readOnly = true)
+    public List<Formacao> listarFormacoes(Long id) {
+        if (id != null && id > 0) {
+            Curriculo curriculo = curriculoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Currículo não encontrado."));
+
+            return curriculo.getListaFormacao();
+        }
+        throw new EntityNotFoundException("ID não fornecido ou inválido.");
     }
 
 }

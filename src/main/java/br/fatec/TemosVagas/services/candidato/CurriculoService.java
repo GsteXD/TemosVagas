@@ -2,15 +2,11 @@ package br.fatec.TemosVagas.services.candidato;
 
 import br.fatec.TemosVagas.entities.candidato.Candidato;
 import br.fatec.TemosVagas.entities.candidato.Curriculo;
-import br.fatec.TemosVagas.entities.candidato.Formacao;
 import br.fatec.TemosVagas.repositories.candidato.CandidatoRepository;
 import br.fatec.TemosVagas.repositories.candidato.CurriculoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class CurriculoService {
@@ -29,12 +25,9 @@ public class CurriculoService {
         return curriculoRepository.save(curriculo);
     }
 
-    @Transactional(readOnly = true)
-    public List<Formacao> listarFormacoes(Long id) {
-        if (id != null && id > 0) {
-            Curriculo curriculo = curriculoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Currículo não encontrado."));
-
-            return curriculo.getListaFormacao();
+    public Curriculo listarCurriculo(Long id_curriculo) {
+        if (id_curriculo != null && id_curriculo > 0) {
+            return curriculoRepository.findById(id_curriculo).orElseThrow(() -> new EntityNotFoundException("Currículo não encontrado."));
         }
         throw new EntityNotFoundException("ID não fornecido ou inválido.");
     }

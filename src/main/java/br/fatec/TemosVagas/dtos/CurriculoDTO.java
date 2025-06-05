@@ -25,8 +25,8 @@ public record CurriculoDTO(
     public static Curriculo toCurriculo(CurriculoDTO dto) {
         if ( dto != null ) {
             Curriculo curriculo = new Curriculo();
-            if (dto.formacao != null) {
-                curriculo.setListaFormacao(FormacaoDTO.toFormacao(dto.formacao));
+            if (dto.formacao != null) { // Caso um usuário passe a formação diretamente
+                curriculo.setListaFormacao(FormacaoDTO.toFormacoes(dto.formacao));
             } else {
                 curriculo.setListaFormacao(null);
             }
