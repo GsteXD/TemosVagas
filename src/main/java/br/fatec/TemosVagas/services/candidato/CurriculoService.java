@@ -5,8 +5,12 @@ import br.fatec.TemosVagas.entities.candidato.Curriculo;
 import br.fatec.TemosVagas.repositories.candidato.CandidatoRepository;
 import br.fatec.TemosVagas.repositories.candidato.CurriculoRepository;
 import jakarta.persistence.EntityNotFoundException;
+
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class CurriculoService {
@@ -23,6 +27,28 @@ public class CurriculoService {
         curriculo.setCandidato(candidato);
 
         return curriculoRepository.save(curriculo);
+    }
+
+    public void uploadCurriculo(Long id_curriculo, MultipartFile file) {
+        Curriculo curriculo = listarCurriculo(id_curriculo);
+
+        try {
+            curriculo.setArquivoPdf(file.getBytes());
+            curriculoRepository.save(curriculo);
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao processar o arquivo PDF:", e);
+        }
+    }
+
+    public byte[] downloadCurriculo(Long id_curriculo) {
+        Curriculo curriculo = listarCurriculo(id_curriculo);
+        byte[] pdf = curriculo.getArquivoPdf();
+
+        if (pdf == null || pdf.length == 0) {
+            throw new EntityNotFoundException("PDF não encontrado.");
+        }
+
+        return pdf;
     }
 
     public Curriculo listarCurriculo(Long id_curriculo) {

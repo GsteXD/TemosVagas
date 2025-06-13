@@ -26,6 +26,9 @@ public class Curriculo implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "curriculo_seq")
     private Long id;
 
+    @Lob
+    private byte[] arquivoPdf;
+
     @OneToMany(mappedBy = "curriculo", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Formacao> listaFormacao = new ArrayList<>();
