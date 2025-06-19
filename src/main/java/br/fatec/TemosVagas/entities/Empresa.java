@@ -1,8 +1,10 @@
 package br.fatec.TemosVagas.entities;
 
 import br.fatec.TemosVagas.entities.usuario.Usuario;
+import br.fatec.TemosVagas.entities.usuario.UsuarioRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,4 +27,9 @@ public class Empresa extends Usuario {
     @Column(name = "grupo", nullable = false, length = 100)
     private String grupo;
 
+
+    @PrePersist
+    public void prePersist() {
+        this.setRole(UsuarioRole.ROLE_EMPRESA);
+    }
 }
