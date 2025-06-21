@@ -1,7 +1,5 @@
 package br.fatec.TemosVagas.services.candidato;
 
-import br.fatec.TemosVagas.dtos.autenticacao.LoginRequest;
-import br.fatec.TemosVagas.dtos.autenticacao.LoginResponse;
 import br.fatec.TemosVagas.entities.candidato.Candidato;
 import br.fatec.TemosVagas.repositories.candidato.CandidatoRepository;
 import br.fatec.TemosVagas.security.jwt.AuthenticationService;
@@ -18,8 +16,6 @@ public class  CandidatoService {
 
     @Autowired
     BCryptPasswordEncoder encoder;
-    @Autowired
-    private AuthenticationService authenticationService;
 
     public Candidato cadastrar(Candidato candidato) {
         if (candidato != null) {
