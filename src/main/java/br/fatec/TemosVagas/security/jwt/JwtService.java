@@ -44,7 +44,7 @@ public class JwtService {
                     .getBody()
                     .getSubject();
         } catch (Exception e) {
-            return "";
+            throw new RuntimeException("Falha ao validar token", e);
         }
     }
 
