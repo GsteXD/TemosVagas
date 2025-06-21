@@ -1,5 +1,6 @@
 package br.fatec.TemosVagas.entities.usuario;
 
+import br.fatec.TemosVagas.entities.enums.UsuarioRole;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

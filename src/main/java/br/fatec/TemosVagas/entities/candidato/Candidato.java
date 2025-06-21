@@ -1,7 +1,7 @@
 package br.fatec.TemosVagas.entities.candidato;
 
 import br.fatec.TemosVagas.entities.usuario.Usuario;
-import br.fatec.TemosVagas.entities.usuario.UsuarioRole;
+import br.fatec.TemosVagas.entities.enums.UsuarioRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrePersist;
