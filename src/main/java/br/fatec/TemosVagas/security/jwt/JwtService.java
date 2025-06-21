@@ -18,7 +18,7 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String chavePrivada;
 
-
+    // Faz a geração de token para o usuario que fez login
     public String gerarToken(UserDetails usuario) {
         try {
             return Jwts.builder()
@@ -33,6 +33,7 @@ public class JwtService {
         }
     }
 
+    // Valida o token e retorna o email do usuario que fez login
     public String validarToken(String token) {
         try {
             return Jwts.parserBuilder()
@@ -47,11 +48,13 @@ public class JwtService {
         }
     }
 
+    // verifica se token corresponde ao usuario autenticado e se o mesmo ainda é valido. Retorna true caso esteja valido.
     public boolean tokenValido(String token, UserDetails usuario) {
         String email = validarToken(token);
         return email != null && !email.isEmpty() && email.equals(usuario.getUsername());
     }
 
+    // gera o tempo de validade que vai ser atribuido ao token, sendo 2 horas a partir do momento em que for gerado o token
     private Instant gerarDataValidade() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }

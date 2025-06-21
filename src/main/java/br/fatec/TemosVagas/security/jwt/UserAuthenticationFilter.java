@@ -24,6 +24,7 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
+    // Intercepta todas as requisições HTTP para fazer a validação do token
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
@@ -38,8 +39,10 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
+        // extrai o token jwt do header
         jwt = authHeader.substring(7);
         usuarioEmail = jwtService.validarToken(jwt);
+
 
         if(usuarioEmail != null && !usuarioEmail.isEmpty()
                 && SecurityContextHolder.getContext().getAuthentication() == null) {
