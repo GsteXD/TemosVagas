@@ -29,6 +29,8 @@ public class SecurityConfig {
                     authorizeRequests
                             .requestMatchers(HttpMethod.POST,"/candidato/cadastrar").permitAll()
                             .requestMatchers(HttpMethod.POST,"/autenticar/login").permitAll()
+                            .requestMatchers("/empresa/**").hasRole("EMPRESA")
+                            .requestMatchers("/candidato/**").hasRole("CANDIDATO")
                             .anyRequest().authenticated()
                 )
                 .cors(cors -> cors.configurationSource(request -> {
