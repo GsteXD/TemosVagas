@@ -37,8 +37,5 @@ public class  CandidatoService {
         throw new EntityNotFoundException("ID não especificado.");
     }
 
-    public LoginResponse login(LoginRequest loginRequest) {
-            return authenticationService.autenticar(loginRequest);
-        }
 
 }
