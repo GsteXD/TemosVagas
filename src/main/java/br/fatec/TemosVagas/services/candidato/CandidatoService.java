@@ -2,7 +2,6 @@ package br.fatec.TemosVagas.services.candidato;
 
 import br.fatec.TemosVagas.entities.candidato.Candidato;
 import br.fatec.TemosVagas.repositories.candidato.CandidatoRepository;
-import br.fatec.TemosVagas.security.jwt.AuthenticationService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

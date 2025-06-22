@@ -31,7 +31,7 @@ public record CandidatoDTO(
         @NotBlank(message = "É necessário informar um email.")
         String email,
 
-        @NotBlank(message = "É nessário informar uma senha.")
+        @NotBlank(message = "É necessário informar uma senha.")
         String senha,
 
         @Valid
