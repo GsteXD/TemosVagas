@@ -27,6 +27,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                     authorizeRequests
                             .requestMatchers(HttpMethod.POST,"/candidato/cadastrar").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/empresa/cadastrar").permitAll()
                             .requestMatchers(HttpMethod.POST,"/autenticar/login").permitAll()
                             .requestMatchers("/empresa/**").hasRole("EMPRESA")
                             .requestMatchers("/candidato/**").hasRole("CANDIDATO")
