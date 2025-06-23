@@ -1,5 +1,6 @@
-package br.fatec.TemosVagas.dtos;
+package br.fatec.TemosVagas.dtos.candidato;
 
+import br.fatec.TemosVagas.dtos.EnderecoDTO;
 import br.fatec.TemosVagas.entities.candidato.Candidato;
 
 import java.io.Serial;

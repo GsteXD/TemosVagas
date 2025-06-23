@@ -1,6 +1,6 @@
 package br.fatec.TemosVagas.controllers.candidato;
 
-import br.fatec.TemosVagas.dtos.CurriculoDTO;
+import br.fatec.TemosVagas.dtos.candidato.CurriculoDTO;
 import br.fatec.TemosVagas.entities.candidato.Curriculo;
 import br.fatec.TemosVagas.services.candidato.CurriculoService;
 import org.springframework.beans.factory.annotation.Autowired;

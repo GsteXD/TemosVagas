@@ -1,6 +1,6 @@
 package br.fatec.TemosVagas.controllers.candidato;
 
-import br.fatec.TemosVagas.dtos.FormacaoDTO;
+import br.fatec.TemosVagas.dtos.candidato.FormacaoDTO;
 import br.fatec.TemosVagas.entities.candidato.Formacao;
 import br.fatec.TemosVagas.services.candidato.FormacaoService;
 

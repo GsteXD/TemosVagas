@@ -1,6 +1,6 @@
 package br.fatec.TemosVagas.controllers.candidato;
 
-import br.fatec.TemosVagas.dtos.CandidatoDTO;
+import br.fatec.TemosVagas.dtos.candidato.CandidatoDTO;
 import br.fatec.TemosVagas.entities.candidato.Candidato;
 import br.fatec.TemosVagas.services.candidato.CandidatoService;
 import jakarta.validation.Valid;
