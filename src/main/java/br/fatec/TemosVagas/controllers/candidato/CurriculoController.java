@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
-@RequestMapping("/curriculo")
+@RequestMapping("/candidato/curriculo")
 public class CurriculoController {
 
     @Autowired
