@@ -30,6 +30,7 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.POST, "/empresa/cadastrar").permitAll()
                             .requestMatchers(HttpMethod.POST,"/autenticar/login").permitAll()
                             .requestMatchers("/empresa/**").hasRole("EMPRESA")
+                            .requestMatchers("/vaga/cadastrar", "/vaga/atualizar").hasRole("EMPRESA")
                             .requestMatchers("/candidato/**").hasRole("CANDIDATO")
                             .anyRequest().authenticated()
                 )
