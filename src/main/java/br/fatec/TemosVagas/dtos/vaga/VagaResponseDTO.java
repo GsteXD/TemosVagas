@@ -6,6 +6,7 @@ import java.io.Serializable;
 import br.fatec.TemosVagas.entities.Vaga;
 
 public record VagaResponseDTO(
+    String nomeEmpresa,
     String status,
     String tipo,
     String titulo,
@@ -26,6 +27,7 @@ public record VagaResponseDTO(
     public static VagaResponseDTO valueOf(Vaga vaga) {
         if (vaga != null) {
             return new VagaResponseDTO(
+                vaga.getEmpresa().getNome(),
                 vaga.getStatus().getStatus().toString(),
                 vaga.getTipo(), 
                 vaga.getTitulo(), 

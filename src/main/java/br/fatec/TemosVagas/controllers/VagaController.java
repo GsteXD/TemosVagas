@@ -13,6 +13,11 @@ import br.fatec.TemosVagas.dtos.vaga.VagaResponseDTO;
 import br.fatec.TemosVagas.entities.Vaga;
 import br.fatec.TemosVagas.services.VagaService;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
+
+
 
 @RestController
 @RequestMapping("/vaga")
@@ -26,4 +31,17 @@ public class VagaController {
         Vaga vaga = vagaService.cadastrar(VagaDTO.toVaga(dto));
         return ResponseEntity.ok().body(VagaResponseDTO.valueOf(vaga));
     }
+
+    @PutMapping("/atualizar/{id}")
+    public @ResponseBody ResponseEntity<VagaResponseDTO> atualizar(@PathVariable Long id, @RequestBody @Valid VagaDTO dto) {
+        Vaga vaga = vagaService.atualizar(id, VagaDTO.toVaga(dto));
+        return ResponseEntity.ok().body(VagaResponseDTO.valueOf(vaga));
+    }
+
+    @GetMapping("/find/{id}")
+    public @ResponseBody ResponseEntity<VagaResponseDTO> findById(@PathVariable Long id) {
+        Vaga vaga = vagaService.findById(id);
+        return ResponseEntity.ok().body(VagaResponseDTO.valueOf(vaga));
+    }
+    
 }

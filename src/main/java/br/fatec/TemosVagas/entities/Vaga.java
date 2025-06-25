@@ -68,6 +68,10 @@ public class Vaga implements Serializable {
     @Column(name = "cursoConclusao", nullable = true)
     private Year cursoConclusao;
 
+    @ManyToOne
+    @JoinColumn(name = "empresa_id", nullable = false)
+    private Empresa empresa;
+
     public String getDataPub() {
         return dataPub != null
             ? dataPub.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
