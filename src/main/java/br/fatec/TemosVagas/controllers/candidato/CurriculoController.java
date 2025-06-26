@@ -16,25 +16,25 @@ public class CurriculoController {
     @Autowired
     CurriculoService curriculoService;
 
-    @PostMapping("/cadastrar/{id_usuario}")
-    public @ResponseBody ResponseEntity<CurriculoDTO> cadastrar(@RequestBody CurriculoDTO curriculoDTO, @PathVariable Long id_usuario) {
-        Curriculo curriculo = curriculoService.cadastrar(CurriculoDTO.toCurriculo(curriculoDTO), id_usuario);
+    @PostMapping("/cadastrar")
+    public @ResponseBody ResponseEntity<CurriculoDTO> cadastrar(@RequestBody CurriculoDTO curriculoDTO) {
+        Curriculo curriculo = curriculoService.cadastrar(CurriculoDTO.toCurriculo(curriculoDTO));
         return ResponseEntity.ok().body(CurriculoDTO.valueOf(curriculo));
     }
 
-    @PostMapping(value = "/upload/{id_curriculo}", consumes = "multipart/form-data")
-    public ResponseEntity<String> uploadCurriculo(@RequestParam("file") MultipartFile file, @PathVariable Long id_curriculo) {
+    @PostMapping(value = "/upload", consumes = "multipart/form-data")
+    public ResponseEntity<String> uploadCurriculo(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty() || !"application/pdf".equals(file.getContentType())) {
             return ResponseEntity.badRequest().body("Arquivo inválido. Envie um PDF.");
         }
-        curriculoService.uploadCurriculo(id_curriculo, file);
+        curriculoService.uploadCurriculo(file);
 
         return ResponseEntity.ok().body("Arquivo enviado com sucesso!");
     }
     
-    @GetMapping("/download/{id_curriculo}")
-    public ResponseEntity<byte[]> downloadCurriculo(@PathVariable Long id_curriculo) {
-        byte[] pdf = curriculoService.downloadCurriculo(id_curriculo);
+    @GetMapping("/download")
+    public ResponseEntity<byte[]> downloadCurriculo() {
+        byte[] pdf = curriculoService.downloadCurriculo();
 
         return ResponseEntity.ok()
             .header("Content-Disposition", "attachment; filename=curriculo.pdf")
@@ -43,9 +43,9 @@ public class CurriculoController {
     }
 
     // Mostra todas as informações do currículo
-    @GetMapping("/listar/{id_curriculo}")
-    public @ResponseBody ResponseEntity<CurriculoDTO> listarCurriculo(@PathVariable Long id_curriculo) {
-        Curriculo curriculo = curriculoService.listarCurriculo(id_curriculo);
+    @GetMapping("/listar")
+    public @ResponseBody ResponseEntity<CurriculoDTO> listarCurriculo() {
+        Curriculo curriculo = curriculoService.listarCurriculo();
         return ResponseEntity.ok().body(CurriculoDTO.valueOf(curriculo));
     }
 }
