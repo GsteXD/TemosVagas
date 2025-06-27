@@ -1,8 +1,9 @@
-package br.fatec.TemosVagas.dtos;
+package br.fatec.TemosVagas.dtos.empresa;
 
 import java.io.Serial;
 import java.io.Serializable;
 
+import br.fatec.TemosVagas.dtos.EnderecoDTO;
 import br.fatec.TemosVagas.entities.Empresa;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
