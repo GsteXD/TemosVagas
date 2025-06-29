@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Atualização da sua Candidatura - Temos Vagas</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #ffffff;">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td style="padding: 40px 10px 40px 10px;">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse; background-color: #ffffff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+
+                <!-- Cabeçalho  -->
+                <tr>
+                    <td align="center" bgcolor="#0074AE" style="padding: 25px 20px 25px 20px;">
+                        <h1 style="font-size: 38px; font-weight: bold; color: #ffffff; margin: 0;">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2920/2920324.png" alt="Ícone de Maleta" width="45" height="40" style="vertical-align: middle; margin-left: 2px;"> Temos Vagas <img src="https://cdn-icons-png.flaticon.com/512/2920/2920324.png" alt="Ícone de Maleta" width="45" height="40" style="vertical-align: middle; margin-left: 2px;">
+                        </h1>
+                    </td>
+                </tr>
+
+
+                <!-- Título da Notificação -->
+                <tr>
+                    <td align="center" style="padding: 50px 30px 10px 30px;">
+                        <h2 style="font-size: 26px; font-weight: bold; color: #333333; margin: 0;">Olá, <span th:text="${nome}">[Nome]</span></h2>
+                    </td>
+                </tr>
+
+                <!-- Mensagem Principal -->
+                <tr>
+                    <td align="center" style="padding: 10px 30px 30px 30px;">
+                        <p style="font-size: 16px; line-height: 1.5; color: #555555; margin: 0; text-align: center;">
+                            Informamos que houve uma atualização na sua candidatura.
+                        </p>
+                    </td>
+                </tr>
+
+                <!-- Detalhes vaga -->
+                <tr>
+                    <td style="padding: 0 30px 30px 30px;">
+                        <div style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px;">
+                            <p style="font-size: 16px; margin: 0 0 10px 0;"><strong>Vaga:</strong> <span th:text="${nomeVaga}">Vaga</span></p>
+                            <p style="font-size: 16px; margin: 0 0 10px 0;"><strong>Empresa:</strong> <span th:text="${nomeEmpresa}">Empresa</span></p>
+                            <p style="font-size: 16px; margin: 0;"><strong>Novo Status:</strong> <span th:style="${status == 'Aprovado' ? 'color: #28a745; font-weight: bold;' : (status == 'Rejeitado' || status == 'Cancelado' ? 'color: #dc3545; font-weight: bold;' : 'color: #0074AE; font-weight: bold;')}" th:text="${status}">Status</span></p>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Mensagem adicional baseada no status -->
+                <tr>
+                    <td align="center" style="padding: 10px 30px 30px 30px;">
+                        <!-- Mensagem para aprovado -->
+                        <div th:if="${status == 'Aprovado'}">
+                            <h3 style="font-size: 18px; font-weight: bold; color: #333333; margin: 0 0 10px 0;">Parabéns! Próximos Passos:</h3>
+                            <p style="font-size: 16px; line-height: 1.5; color: #555555; margin: 0; text-align: center;">
+                                A empresa entrará em contato em breve com mais informações sobre as próximas etapas do processo seletivo.
+                            </p>
+                        </div>
+
+                        <!-- Mensagem para em análise -->
+                        <div th:if="${status == 'Em Análise'}">
+                            <h3 style="font-size: 18px; font-weight: bold; color: #333333; margin: 0 0 10px 0;">Sua candidatura está sendo avaliada:</h3>
+                            <p style="font-size: 16px; line-height: 1.5; color: #555555; margin: 0; text-align: center;">
+                                A empresa está analisando seu currículo e qualificações. Acompanhe as atualizações na plataforma.
+                            </p>
+                        </div>
+
+                        <!-- Mensagem para rejeitado -->
+                        <div th:if="${status == 'Rejeitado'}">
+                            <h3 style="font-size: 18px; font-weight: bold; color: #333333; margin: 0 0 10px 0;">Não desanime:</h3>
+                            <p style="font-size: 16px; line-height: 1.5; color: #555555; margin: 0; text-align: center;">
+                                Continue buscando outras oportunidades em nossa plataforma que combinem com o seu perfil.
+                            </p>
+                        </div>
+
+                        <!-- Mensagem para cancelado -->
+                        <div th:if="${status == 'Cancelado'}">
+                            <h3 style="font-size: 18px; font-weight: bold; color: #333333; margin: 0 0 10px 0;">Processo Encerrado:</h3>
+                            <p style="font-size: 16px; line-height: 1.5; color: #555555; margin: 0; text-align: center;">
+                                Esta candidatura foi cancelada. Se você não solicitou este cancelamento, entre em contato com a empresa.
+                            </p>
+                        </div>
+
+                        <!-- Mensagem default para outros status -->
+                        <div th:if="${status != 'Aprovado' && status != 'Em Análise' && status != 'Rejeitado' && status != 'Cancelado'}">
+                            <h3 style="font-size: 18px; font-weight: bold; color: #333333; margin: 0 0 10px 0;">Informação:</h3>
+                            <p style="font-size: 16px; line-height: 1.5; color: #555555; margin: 0; text-align: center;">
+                                Continue acompanhando as atualizações da sua candidatura através da plataforma.
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Rodapé -->
+                <tr>
+                    <td style="padding: 20px 30px 20px 30px; border-top: 1px solid #eeeeee;">
+                        <p style="margin: 0; font-size: 12px; line-height: 1.5; color: #888888; text-align: center;">
+                            © 2025 Temos Vagas.
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

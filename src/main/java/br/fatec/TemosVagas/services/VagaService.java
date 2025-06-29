@@ -4,6 +4,7 @@ import java.lang.reflect.Modifier;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +17,7 @@ import br.fatec.TemosVagas.entities.enums.TipoStatus;
 import br.fatec.TemosVagas.repositories.StatusRepository;
 import br.fatec.TemosVagas.repositories.VagaRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class VagaService {
@@ -112,6 +113,11 @@ public class VagaService {
                 }
             }
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Vaga> listarVagasAbertas() {
+        return vagaRepository.findByStatusStatus(TipoStatus.ABERTO);
     }
 
 }

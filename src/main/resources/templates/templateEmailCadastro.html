@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bem Vindo(a) à Temos Vagas</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #ffffff;">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td style="padding: 40px 10px 40px 10px;">
+
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse; background-color: #ffffff; border-radius: 30px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+
+                <tr>
+                    <td align="center" bgcolor="#0074AE" style="padding: 25px 20px 25px 20px;">
+                        <h1 style="font-size: 38px; font-weight: bold; color: #ffffff; margin: 0;">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2920/2920324.png" alt="Ícone de Maleta" width="45" height="40" style="vertical-align: middle; margin-left: 2px;"> Temos Vagas <img src="https://cdn-icons-png.flaticon.com/512/2920/2920324.png" alt="Ícone de Maleta" width="45" height="40" style="vertical-align: middle; margin-left: 2px;">
+                        </h1>
+                    </td>
+                </tr>
+
+                <!-- Seção de Saudação -->
+                <tr>
+                    <td align="center" style="padding: 50px 30px 90px 30px; font-size: 20px; line-height: 1.5; color: #333333; font-weight: bold;">
+                        Olá, <span th:text="${nome}">[Nome do Usuário]</span>, seja Bem Vindo(a) à Temos Vagas.
+                    </td>
+                </tr>
+
+                <!-- Seção do Sub-título -->
+                <tr>
+                    <td align="center" style="padding: 0px 0 40px 0;">
+                        <h2 style="font-size: 24px; margin: 0; color: #333333;">O que é a <span style="color: #0074AE;">Temos Vagas</span>?</h2>
+                    </td>
+                </tr>
+
+                <!-- Seção 1: Plataforma Aberta -->
+                <tr>
+                    <td align="center" style="padding: 20px 30px 20px 30px;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" alt="Ícone de pessoas" width="50" height="50" style="display: block; margin-bottom: 15px;">
+                        <h3 style="font-size: 22px; margin: 0 0 10px 0; font-weight: bold; color: #000000; text-decoration: none;">1. Plataforma aberta para candidatos e empresas</h3>
+                        <p style="color: #555555; font-size: 16px; line-height: 1.5; margin: 0;">Conectamos pessoas que buscam oportunidades a empresas que precisam contratar. Tudo de forma simples, rápida e acessível.</p>
+                    </td>
+                </tr>
+
+                <!-- Seção 2: Encontre Vagas -->
+                <tr>
+                    <td align="center" style="padding: 20px 30px 20px 30px;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Ícone de lupa" width="50" height="50" style="display: block; margin-bottom: 15px;">
+                        <h3 style="font-size: 22px; margin: 0 0 10px 0; font-weight: bold; color: #000000; text-decoration: none;">2. Encontre vagas com facilidade</h3>
+                        <p style="color: #555555; font-size: 16px; line-height: 1.5; margin: 0;">Busque por vagas de forma facil e rápida. Todas as informações estão disponíveis gratuitamente para consulta e candidatura.</p>
+                    </td>
+                </tr>
+
+                <!-- Seção 3: Publique sua Vaga -->
+                <tr>
+                    <td align="center" style="padding: 20px 30px 40px 30px;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/942/942748.png" alt="Ícone de publicação" width="50" height="50" style="display: block; margin-bottom: 15px;">
+                        <h3 style="font-size: 22px; margin: 0 0 10px 0; font-weight: bold; color: #000000; text-decoration: none;">3. Publique sua vaga em minutos</h3>
+                        <p style="color: #555555; font-size: 16px; line-height: 1.5; margin: 0;">Empresas e recrutadores podem divulgar oportunidades de forma gratuita e alcançar centenas de candidatos sem complicação.</p>
+                    </td>
+                </tr>
+
+                <!-- Rodapé -->
+                <tr>
+                    <td style="padding: 20px 30px 20px 30px; border-top: 1px solid #eeeeee;">
+                        <p style="margin: 0; font-size: 12px; line-height: 1.5; color: #888888; text-align: center;">
+
+                            © 2025 Temos Vagas.
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
