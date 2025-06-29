@@ -31,7 +31,13 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.POST,"/autenticar/login").permitAll()
                             .requestMatchers("/empresa/**").hasRole("EMPRESA")
                             .requestMatchers("/vaga/cadastrar", "/vaga/atualizar").hasRole("EMPRESA")
+                            .requestMatchers(HttpMethod.GET,"/vaga/listar").hasRole("CANDIDATO")
                             .requestMatchers("/candidato/**").hasRole("CANDIDATO")
+                            //rotas de aplicação.
+                            .requestMatchers(HttpMethod.POST, "/aplicacao/candidatar").hasRole("CANDIDATO")
+                            .requestMatchers(HttpMethod.GET,"/aplicacao/minhasCandidaturas").hasRole("CANDIDATO")
+                            .requestMatchers(HttpMethod.GET,"/aplicacao/vaga/**").hasRole("EMPRESA")
+                            .requestMatchers(HttpMethod.PUT,"/aplicacao/status/**").hasRole("EMPRESA")
                             .anyRequest().authenticated()
                 )
                 .cors(cors -> cors.configurationSource(request -> {
