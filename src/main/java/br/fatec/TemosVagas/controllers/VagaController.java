@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -43,5 +45,14 @@ public class VagaController {
         Vaga vaga = vagaService.findById(id);
         return ResponseEntity.ok().body(VagaResponseDTO.valueOf(vaga));
     }
-    
+
+    //Vagas disponiveis.
+    @GetMapping("/listar")
+    public @ResponseBody ResponseEntity<List<VagaResponseDTO>> listarVagasAbertas() {
+        List<Vaga> vagas = vagaService.listarVagasAbertas();
+        List<VagaResponseDTO> response = vagas.stream()
+                        .map(VagaResponseDTO::valueOf)
+                        .collect(Collectors.toList());
+        return ResponseEntity.ok().body(response);
+    }
 }
