@@ -11,4 +11,7 @@ public interface CurriculoRepository extends JpaRepository<Curriculo, Long> {
 
     @Query(value = "SELECT c FROM Curriculo c WHERE c.candidato.id = :candidatoId", nativeQuery = false)
     Optional<Curriculo> findByCandidatoId(Long candidatoId);
+
+    boolean existsByCandidato_Id(Long candidatoId);
+
 }

@@ -74,7 +74,7 @@ public class AplicacaoService {
             throw new IllegalStateException("É necessario ter um curriculo cadastrado.");
         }
 
-        Optional<Curriculo> curricoloOpt = curriculoRepository.findByCandidato_Id(candidato.getId());
+        Optional<Curriculo> curricoloOpt = curriculoRepository.findByCandidatoId(candidato.getId());
 
         switch (tipoVaga) {
             case "estágio" -> validarElegibilidadeEstagio(candidato, vaga, curricoloOpt);
@@ -223,6 +223,7 @@ public class AplicacaoService {
     //atualiza o status de uma aplicação.
 
 
+    //TODO: ao mudar o status da aplicação para aprovado, mudar o status da vaga para fechado?
     //TODO: ao mudar o status da aplicação para aprovado, mudar o status da vaga para fechado?
     @Transactional
     public Aplicacao atualizarStatusAplicacao(Long aplicacaoId, StatusAplicacao novoStatus) {
