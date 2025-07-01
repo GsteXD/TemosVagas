@@ -6,6 +6,7 @@ import java.io.Serializable;
 import br.fatec.TemosVagas.entities.Vaga;
 
 public record VagaResponseDTO(
+    Long id,//adicionei id para facilitar a aplicação para vaga.
     String nomeEmpresa,
     String status,
     String tipo,
@@ -27,6 +28,7 @@ public record VagaResponseDTO(
     public static VagaResponseDTO valueOf(Vaga vaga) {
         if (vaga != null) {
             return new VagaResponseDTO(
+                vaga.getId(),
                 vaga.getEmpresa().getNome(),
                 vaga.getStatus().getStatus().toString(),
                 vaga.getTipo(), 
