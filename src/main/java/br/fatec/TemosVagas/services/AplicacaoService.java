@@ -6,8 +6,10 @@ import br.fatec.TemosVagas.entities.candidato.Candidato;
 import br.fatec.TemosVagas.entities.candidato.Curriculo;
 import br.fatec.TemosVagas.entities.candidato.Formacao;
 import br.fatec.TemosVagas.entities.enums.StatusAplicacao;
+import br.fatec.TemosVagas.entities.enums.TipoStatus;
 import br.fatec.TemosVagas.repositories.AplicacaoRepository;
-import br.fatec.TemosVagas.repositories.candidato.CandidatoRepository;
+import br.fatec.TemosVagas.repositories.StatusRepository;
+import br.fatec.TemosVagas.repositories.VagaRepository;
 import br.fatec.TemosVagas.repositories.candidato.CurriculoRepository;
 import br.fatec.TemosVagas.utils.DateUtils;
 import jakarta.persistence.EntityNotFoundException;
@@ -34,7 +36,10 @@ public class AplicacaoService {
     private VagaService vagaService;
 
     @Autowired
-    private CandidatoRepository candidatoRepository;
+    private VagaRepository vagaRepository;
+
+    @Autowired
+    private StatusRepository statusRepository;
 
     @Autowired
     private CurriculoRepository curriculoRepository;
@@ -47,6 +52,12 @@ public class AplicacaoService {
         Candidato candidato = (Candidato) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         Vaga vaga = vagaService.findById(vagaId);
+
+        // Verifica se a vaga já não foi fechada.
+        if (vaga.getStatus() != null && vaga.getStatus().getStatus().equals(TipoStatus.FECHADO)) {
+            throw new IllegalStateException("A vaga já foi fechada e não permite mais candidaturas.");
+        }
+
         //verifica se o candidato ja aplicou para esta vaga.
         Optional<Aplicacao> aplicacaoExistente = aplicacaoRepository.findByCandidato_IdAndVaga_Id(candidato.getId(), vagaId);
         if(aplicacaoExistente.isPresent()) {
@@ -159,7 +170,7 @@ public class AplicacaoService {
                     });
 
             if(!conclusaoRecente) {
-                throw new IllegalStateException("Seu ano de formação n atende o requisitado para a vaga.");
+                throw new IllegalStateException("Seu ano de formação não atende ao requisitado para a vaga.");
             }
         }
     }
@@ -231,9 +242,21 @@ public class AplicacaoService {
                 .orElseThrow(() -> new EntityNotFoundException("Aplicação não encontrada."));
 
         if(aplicacao.getStatusAplicacao() != novoStatus){
+            //TODO: O que seria o status anterior? Ele usaria para recuperar algum contexto?
             StatusAplicacao statusAnterior = aplicacao.getStatusAplicacao();
             aplicacao.setStatusAplicacao(novoStatus);
             Aplicacao aplicacaoAtualizada = aplicacaoRepository.save(aplicacao);
+
+            // Dependendo, faz sentido fechar a vaga, considerando que caso o candidato seja aprovado,
+            // a vaga será preenchida e não estará mais disponível para outros candidatos.
+            if (novoStatus == StatusAplicacao.APROVADO) {
+                Vaga vaga = aplicacao.getVaga();
+                if (vaga.getStatus() == null || vaga.getStatus().getStatus() != TipoStatus.FECHADO) {
+                    vaga.setStatus(statusRepository.findById(TipoStatus.FECHADO)
+                        .orElseThrow(() -> new EntityNotFoundException("Status 'FECHADO' não encontrado.")));
+                    vagaRepository.save(vaga);
+                }
+            }
 
             notificarMudancaStatus(aplicacaoAtualizada);
 
