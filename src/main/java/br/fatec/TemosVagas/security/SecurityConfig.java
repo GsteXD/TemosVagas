@@ -30,7 +30,8 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.POST, "/empresa/cadastrar").permitAll()
                             .requestMatchers(HttpMethod.POST,"/autenticar/login").permitAll()
                             .requestMatchers("/empresa/**").hasRole("EMPRESA")
-                            .requestMatchers("/vaga/cadastrar", "/vaga/atualizar").hasRole("EMPRESA")
+                            .requestMatchers("/vaga/cadastrar", "/vaga/atualizar", "/vaga/status").hasRole("EMPRESA")
+                            .requestMatchers("/relatorio/**").hasRole("EMPRESA")
                             .requestMatchers(HttpMethod.GET,"/vaga/listar").hasRole("CANDIDATO")
                             .requestMatchers("/candidato/**").hasRole("CANDIDATO")
                             //rotas de aplicação.
