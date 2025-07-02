@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import br.fatec.TemosVagas.entities.Vaga;
 import br.fatec.TemosVagas.entities.enums.TipoStatus;
 import br.fatec.TemosVagas.repositories.StatusRepository;
 import br.fatec.TemosVagas.repositories.VagaRepository;
+import br.fatec.TemosVagas.utils.DateUtils;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,6 +55,18 @@ public class VagaService {
             Vaga vagaExistente = vagaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Vaga não encontrada."));
                 
+            //Verifica se a dataLimite foi prorrogada
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate novaDataLimite = LocalDate.parse(vaga.getDataLimite(), formatter);
+            LocalDate dataLimiteAtual = LocalDate.parse(vagaExistente.getDataLimite(), formatter);
+            LocalDate hoje = LocalDate.now();
+
+            //Seta o status como PRORROGADO caso a condição seja verdadeira
+            if (!novaDataLimite.equals(dataLimiteAtual) && novaDataLimite.isAfter(hoje)) {
+                vagaExistente.setStatus(statusRepository.findById(TipoStatus.PRORROGADO)
+                    .orElseThrow(() -> new EntityNotFoundException("Status 'PRORROGADO' não encontrado.")));
+            }
+
             Arrays.stream(Vaga.class.getDeclaredFields())
                 .filter(field -> 
                     !Modifier.isStatic(field.getModifiers()) && 
@@ -84,6 +98,11 @@ public class VagaService {
 
     //Validação da vaga a depender do tipo que for passado no corpo
     private void validarVaga(Vaga vaga) {
+        Boolean dataValida = DateUtils.DataAtualOuFutura(vaga.getDataLimite());
+        if (!dataValida) {
+            throw new IllegalArgumentException("A data limite deve ser igual ou posterior à data atual.");
+        }
+
         String tipo = vaga.getTipo() != null ? vaga.getTipo().toLowerCase() : "";
         switch (tipo) {
             case "estágio" -> {
@@ -118,6 +137,50 @@ public class VagaService {
     @Transactional(readOnly = true)
     public List<Vaga> listarVagasAbertas() {
         return vagaRepository.findByStatusStatus(TipoStatus.ABERTO);
+    }
+
+    //Fecha automaticamente as vagas que estão com a data limite vencida
+    // O fechamento ocorre diariamente à meia-noite
+    @Scheduled(cron = "0 0 0 * * ?") 
+    @Transactional
+    public void fecharVagasVencidas() {
+        List<Vaga> vagasAbertas = vagaRepository.findByStatusStatus(TipoStatus.ABERTO);
+        LocalDate hoje = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        for (Vaga vaga : vagasAbertas) {
+            LocalDate dataLimite = LocalDate.parse(vaga.getDataLimite(), formatter);
+            if (!dataLimite.isAfter(hoje)) {
+                vaga.setStatus(
+                    statusRepository.findById(TipoStatus.FECHADO).orElseThrow(() ->
+                        new EntityNotFoundException("Status 'FECHADO' não encontrado."))
+                );
+                vagaRepository.save(vaga);
+            }
+        }
+    }
+
+    //Caso a empresa necessite controlar o status da vaga manualmente
+    public void controlarStatus(Long id, TipoStatus status) {
+        if (id != null && id > 0) {
+            Empresa empresa = (Empresa) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Vaga vaga = vagaRepository.findByIdAndEmpresaId(id, empresa.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Vaga não encontrada ou não pertencente à empresa."));
+            switch (status) {
+                case ABERTO:
+                    vaga.setStatus(statusRepository.findById(TipoStatus.ABERTO)
+                        .orElseThrow(() -> new EntityNotFoundException("Status 'ABERTO' não encontrado.")));
+                    break;
+                case FECHADO:
+                    vaga.setStatus(statusRepository.findById(TipoStatus.FECHADO)
+                        .orElseThrow(() -> new EntityNotFoundException("Status 'FECHADO' não encontrado.")));
+                    break;
+                default:
+                    throw new IllegalArgumentException("Status inválido. Defina o status como ABERTO ou FECHADO.");
+            }
+            vagaRepository.save(vaga);
+        } else {
+            throw new EntityNotFoundException("ID não especificado.");
+        }
     }
 
 }
