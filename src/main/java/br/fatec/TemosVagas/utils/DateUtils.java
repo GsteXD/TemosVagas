@@ -1,5 +1,6 @@
 package br.fatec.TemosVagas.utils;
 
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -43,6 +44,19 @@ public class DateUtils {
             return YearMonth.parse(dataString, formatarMesAno);
         }catch (DateTimeParseException e) {
             return null;
+        }
+    }
+
+    public static boolean DataAtualOuFutura(String dataString) {
+        if (dataString == null || dataString.isBlank()) {
+            return false;
+        }
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate data = LocalDate.parse(dataString, formatter);
+            return !data.isBefore(LocalDate.now());
+        } catch (DateTimeParseException e) {
+            return false;
         }
     }
 

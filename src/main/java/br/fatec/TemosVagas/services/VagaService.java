@@ -52,8 +52,9 @@ public class VagaService {
         if (vaga != null) {
             validarVaga(vaga);
 
-            Vaga vagaExistente = vagaRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Vaga não encontrada."));
+            Empresa empresa = (Empresa) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Vaga vagaExistente = vagaRepository.findByIdAndEmpresaId(id, empresa.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Vaga não encontrada ou não pertencente à empresa."));
                 
             //Verifica se a dataLimite foi prorrogada
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

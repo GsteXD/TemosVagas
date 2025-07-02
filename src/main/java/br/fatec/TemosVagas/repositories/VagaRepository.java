@@ -9,11 +9,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface VagaRepository extends JpaRepository<Vaga, Long>{
 
     @Query("SELECT v FROM Vaga v WHERE v.status.Status = :status")
     List<Vaga> findByStatusStatus(@Param("status") TipoStatus status);
+
+    //Verifica se a empresa logada é dona da vaga
+    @Query("SELECT v FROM Vaga v WHERE v.id = :id AND v.empresa.id = :empresaId")
+    Optional<Vaga> findByIdAndEmpresaId(Long id, Long empresaId);
 
     //Realiza um relatório das vagas da empresa logada
     @Query("""
