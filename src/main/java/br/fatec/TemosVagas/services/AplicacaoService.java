@@ -233,30 +233,14 @@ public class AplicacaoService {
     }
     //atualiza o status de uma aplicação.
 
-
-    //TODO: ao mudar o status da aplicação para aprovado, mudar o status da vaga para fechado?
-    //TODO: ao mudar o status da aplicação para aprovado, mudar o status da vaga para fechado?
     @Transactional
     public Aplicacao atualizarStatusAplicacao(Long aplicacaoId, StatusAplicacao novoStatus) {
         Aplicacao aplicacao = aplicacaoRepository.findById(aplicacaoId)
                 .orElseThrow(() -> new EntityNotFoundException("Aplicação não encontrada."));
 
         if(aplicacao.getStatusAplicacao() != novoStatus){
-            //TODO: O que seria o status anterior? Ele usaria para recuperar algum contexto?
-            StatusAplicacao statusAnterior = aplicacao.getStatusAplicacao();
             aplicacao.setStatusAplicacao(novoStatus);
             Aplicacao aplicacaoAtualizada = aplicacaoRepository.save(aplicacao);
-
-            // Dependendo, faz sentido fechar a vaga, considerando que caso o candidato seja aprovado,
-            // a vaga será preenchida e não estará mais disponível para outros candidatos.
-            if (novoStatus == StatusAplicacao.APROVADO) {
-                Vaga vaga = aplicacao.getVaga();
-                if (vaga.getStatus() == null || vaga.getStatus().getStatus() != TipoStatus.FECHADO) {
-                    vaga.setStatus(statusRepository.findById(TipoStatus.FECHADO)
-                        .orElseThrow(() -> new EntityNotFoundException("Status 'FECHADO' não encontrado.")));
-                    vagaRepository.save(vaga);
-                }
-            }
 
             notificarMudancaStatus(aplicacaoAtualizada);
 
