@@ -19,11 +19,9 @@ import org.springframework.web.cors.CorsConfiguration;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    //TODO: melhorar a autenticação de rotas
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, UserAuthenticationFilter userAuthenticationFilter) throws Exception {
-        http // Controle da autorização de requests, por enquanto básico, só para testes
+        http //Filtro de autenticação de rotas
                 .authorizeHttpRequests(authorizeRequests ->
                     authorizeRequests
                             .requestMatchers(HttpMethod.POST,"/candidato/cadastrar").permitAll()

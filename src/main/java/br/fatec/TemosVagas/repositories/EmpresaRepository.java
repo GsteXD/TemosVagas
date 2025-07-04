@@ -10,5 +10,4 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
     Optional<Empresa> findByEmail (String email);
     Optional<Empresa> findByCnpj(String cnpj);
 
-    //TODO: Verificar se há a necessidade de aplicar um query aqui
 }
