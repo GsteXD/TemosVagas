@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Configuration
+@EnableScheduling
 public class VagaService {
     
     @Autowired
@@ -144,7 +148,7 @@ public class VagaService {
     // O fechamento ocorre diariamente à meia-noite
     @Scheduled(cron = "0 0 0 * * ?") 
     @Transactional
-    public void fecharVagasVencidas() {
+    protected void fecharVagasVencidas() {
         List<Vaga> vagasAbertas = vagaRepository.findByStatusStatus(TipoStatus.ABERTO);
         LocalDate hoje = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
